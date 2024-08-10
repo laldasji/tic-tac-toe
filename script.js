@@ -6,75 +6,76 @@ const boxes = document.querySelectorAll('.box');
 const passStatus = declareWinner.querySelector('#passStatus');
 const respectStatus = declareWinner.querySelector('#respectStatus');
 const passAudio = document.querySelector('#missionPassed');
+
 passAudio.addEventListener('ended', () => {
-    audio.currentTime = 0;
+    passAudio.currentTime = 0;
 });
 
 const failAudio = document.querySelector('#missionFailed');
 failAudio.addEventListener('ended', () => {
-    audio.currentTime = 0;
+    failAudio.currentTime = 0;
 });
 
 function checkIfNextWinningMove(gameBoard, playerSymbol) {
-    console.log(`Checking for: ${playerSymbol}`)
+    // console.log(`Checking for: ${playerSymbol}`)
     // Check rows, columns, and diagonals for a winning move
     for (let i = 0; i < 3; i++) {
         // Check rows
         if (gameBoard[i][0] === '' && gameBoard[i][1] === playerSymbol && gameBoard[i][2] === playerSymbol) {
-            console.log([true, i, 0]);
+            // console.log([true, i, 0]);
             return [true, i, 0];
         }
         if (gameBoard[i][0] === playerSymbol && gameBoard[i][1] === '' && gameBoard[i][2] === playerSymbol) {
-            console.log([true, i, 1]);
+            // console.log([true, i, 1]);
             return [true, i, 1];
         }
         if (gameBoard[i][0] === playerSymbol && gameBoard[i][1] === playerSymbol && gameBoard[i][2] === '') {
-            console.log([true, i, 2]);
+            // console.log([true, i, 2]);
             return [true, i, 2];
         }
 
         // Check columns
         if (gameBoard[0][i] === '' && gameBoard[1][i] === playerSymbol && gameBoard[2][i] === playerSymbol) {
-            console.log([true, 0, i]);
+            // console.log([true, 0, i]);
             return [true, 0, i];
         }
         if (gameBoard[0][i] === playerSymbol && gameBoard[1][i] === '' && gameBoard[2][i] === playerSymbol) {
-            console.log([true, 1, i]);
+            // console.log([true, 1, i]);
             return [true, 1, i];
         }
         if (gameBoard[0][i] === playerSymbol && gameBoard[1][i] === playerSymbol && gameBoard[2][i] === '') {
-            console.log([true, 2, i]);
+            // console.log([true, 2, i]);
             return [true, 2, i];
         }
     }
 
     // Check diagonals
     if (gameBoard[0][0] === '' && gameBoard[1][1] === playerSymbol && gameBoard[2][2] === playerSymbol) {
-        console.log([true, 0, 0]);
+        // console.log([true, 0, 0]);
         return [true, 0, 0];
     }
     if (gameBoard[0][0] === playerSymbol && gameBoard[1][1] === '' && gameBoard[2][2] === playerSymbol) {
-        console.log([true, 1, 1]);
+        // console.log([true, 1, 1]);
         return [true, 1, 1];
     }
     if (gameBoard[0][0] === playerSymbol && gameBoard[1][1] === playerSymbol && gameBoard[2][2] === '') {
-        console.log([true, 2, 2]);
+        // console.log([true, 2, 2]);
         return [true, 2, 2];
     }
 
     if (gameBoard[0][2] === '' && gameBoard[1][1] === playerSymbol && gameBoard[2][0] === playerSymbol) {
-        console.log([true, 0, 2]);
+        // console.log([true, 0, 2]);
         return [true, 0, 2];
     }
     if (gameBoard[0][2] === playerSymbol && gameBoard[1][1] === '' && gameBoard[2][0] === playerSymbol) {
-        console.log([true, 1, 1]);
+        // console.log([true, 1, 1]);
         return [true, 1, 1];
     }
     if (gameBoard[0][2] === playerSymbol && gameBoard[1][1] === playerSymbol && gameBoard[2][0] === '') {
-        console.log([true, 2, 0]);
+        // console.log([true, 2, 0]);
         return [true, 2, 0];
     }
-    console.log('none');
+    // console.log('none');
     return [false, -1, -1];
 }
 
@@ -87,27 +88,27 @@ function checkWinner(gameBoard) {
     // Check rows
     for (let i = 0; i < 3; i++) {
         if (isWinningLine(gameBoard[i][0], gameBoard[i][1], gameBoard[i][2])) {
-            return [true, gameBoard[i][0] === 'X'];
+            return true;
         }
     }
 
     // Check columns
     for (let i = 0; i < 3; i++) {
         if (isWinningLine(gameBoard[0][i], gameBoard[1][i], gameBoard[2][i])) {
-            return [true, gameBoard[0][i] === 'X'];
+            return true;
         }
     }
 
     // Check diagonals
     if (isWinningLine(gameBoard[0][0], gameBoard[1][1], gameBoard[2][2])) {
-        return [true, gameBoard[0][0] === 'X'];
+        return true;
     }
     if (isWinningLine(gameBoard[0][2], gameBoard[1][1], gameBoard[2][0])) {
-        return [true, gameBoard[0][2] === 'X'];
+        return true;
     }
 
     // No winner
-    return [false, false];
+    return false;
 }
 
 function bestPossibleMove(gameBoard, playerSymbol, playerMoves, aiMoves) {
@@ -187,6 +188,7 @@ let gameBoard = [
 let playerMoves = [];
 let aiMoves = [];
 let totalChances = 0;
+let isPlayerMove = true;
 
 zeroSelect.addEventListener('click', () => {
     playerSymbol = false;
@@ -212,58 +214,75 @@ crossSelect.addEventListener('click', () => {
     }, 510);
 });
 
-
-function updateBoard() {
-    let index = 0;
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if (gameBoard[i][j] == '')
-            {
-                index++;
-                continue;
-            }
-            boxes[index].className = '';
-            boxes[index].classList.add(gameBoard[i][j] == 'X' ? 'cross' : 'zero');
-            boxes[index].textContent = gameBoard[i][j];
-            index++;
-        }
+function declareWin(playerWins) {
+    if (playerWins) {
+        passStatus.textContent = 'mission passed!';
+        passStatus.classList.add('pass');
+        respectStatus.textContent = 'respect ++';
+        declareWinner.style.display = 'grid';
+        passAudio.play();
     }
+    else {
+        passStatus.textContent = 'mission failed!';
+        passStatus.classList.add('fail');
+        respectStatus.textContent = 'respect --';
+        declareWinner.style.display = 'grid';
+        failAudio.play();
+    }
+}
+
+function declareDraw() {
+    passStatus.textContent = 'draw!';
+    passStatus.classList.add('draw');
+    respectStatus.textContent = 'Good Game!';
+    declareWinner.style.display = 'grid';
+    passAudio.play();
+}
+
+function makeAIPlay() {
+    let aiMove = bestPossibleMove(gameBoard, playerSymbol, playerMoves, aiMoves);
+    aiMoves.push(aiMove);
+    gameBoard[aiMove[0]][aiMove[1]] = playerSymbol ? 'O' : 'X';
+    totalChances++;
+    boxes[aiMove[0] * 3 + aiMove[1]].textContent = playerSymbol ? 'O' : 'X';
+    boxes[aiMove[0] * 3 + aiMove[1]].classList.add(playerSymbol ? 'zero' : 'cross', 'fadeIn');
+    // true means AI wins
+    setTimeout(() => {
+        boxes[aiMove[0] * 3 + aiMove[1]].classList.toggle('fadeIn');
+        boxes[aiMove[0] * 3 + aiMove[1]].classList.toggle('boxDarken');
+        let winner = checkWinner(gameBoard);
+        if (winner)
+            declareWin(false);
+        else if (totalChances == 9)
+            declareDraw();
+        else
+            isPlayerMove = true;
+    }, 500);
 }
 
 for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener('click', () => {
         let row = Math.floor(i / 3);
         let column = i % 3;
-        if (gameBoard[row][column] == '') {
+        if (isPlayerMove && gameBoard[row][column] == '') {
             gameBoard[row][column] = playerSymbol ? 'X' : 'O';
             playerMoves.push([row, column]);
             totalChances++;
-            let winner = checkWinner(gameBoard);
-            if (winner[0])
-            {
-                passStatus.textContent = 'mission passed!';
-                passStatus.classList.add('pass');
-                respectStatus.textContent = 'respect ++';
-                declareWinner.style.display = 'grid';
-                passAudio.play();
-            }
-            if (totalChances < 9) {
-                let aiMove = bestPossibleMove(gameBoard, playerSymbol, playerMoves, aiMoves);
-                aiMoves.push(aiMove);
-                gameBoard[aiMove[0]][aiMove[1]] = playerSymbol ? 'O' : 'X';
-                totalChances++;
+            isPlayerMove = false;
+            boxes[row * 3 + column].textContent = playerSymbol ? 'X' : 'O';
+            boxes[row * 3 + column].classList.add(playerSymbol ? 'cross' : 'zero', 'fadeIn');
+            // true means player wins
+            setTimeout(() => {
+                boxes[row * 3 + column].classList.toggle('fadeIn');
+                boxes[row * 3 + column].classList.toggle('boxDarken');
                 let winner = checkWinner(gameBoard);
-                if (winner[0])
-                {
-                    passStatus.textContent = 'mission failed!';
-                    passStatus.classList.add('fail');
-                    respectStatus.textContent = 'respect --';
-                    declareWinner.style.display = 'grid';
-                    failAudio.play();
-                }
-            }
+                if (winner)
+                    declareWin(true);
+                else if (totalChances == 9)
+                    declareDraw();
+                else
+                    makeAIPlay();
+            }, 500);
         }
-        updateBoard();
     });
 }
-

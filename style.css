@@ -42,7 +42,7 @@ body
     -webkit-text-stroke: var(--stroke-size) var(--dark-green);
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(5px);
     place-items: center;
     background-color: rgba(0, 0, 0, 0.9);
     display: grid;
@@ -87,6 +87,15 @@ body
     }
 }
 
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .dissolve
 {
     animation-name: dissolveLayer;
@@ -106,8 +115,12 @@ body
     grid-template-rows: 1fr 1fr;
     place-items: center;
     background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(5px);
     display: none;
+    #passStatus
+    {
+        align-self: flex-end;
+    }
     .pass
     {
         color: var(--orange);
@@ -115,6 +128,10 @@ body
     .fail
     {
         color: var(--red);
+    }
+    .draw
+    {
+        color: #354883;
     }
     #respectStatus
     {
@@ -153,6 +170,14 @@ body
     background-color: #1b1b1b;
     padding: 0;
     gap: 0.2rem;
+    .boxDarken
+    {
+        transition-duration: 0.5s;
+    }
+    .boxDarken:hover
+    {
+        background-color: var(--eerie-black);
+    }
     & > div
     {
         display: grid;
@@ -173,5 +198,11 @@ body
     .cross
     {
         color: var(--light-green);
+    }
+    .fadeIn
+    {
+        animation-name: fadeIn;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-out;
     }
 }

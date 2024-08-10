@@ -1,0 +1,177 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    height: 100svh;
+    width: 100svw;
+    display: grid;
+    grid-template-rows: 1fr 6fr;
+}
+
+:root
+{
+    font-size: 16px;
+    --orange: #ffaa01;
+    --white: #f1f2eb;
+    --light-green: #a4c2a5;
+    --dark-green: #566246;
+    --eerie-black: #1b1b1b;
+    --red: #d40200;
+    --title-size: calc(3rem + 4vw);
+    --stroke-size: calc(calc(3rem + 4vw)/20);
+}
+
+@font-face {
+    font-family: Pricedown;
+    src: url(resources/pricedown.ttf);
+}
+
+#pickSide
+{
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    font-family: Pricedown;
+    font-size: var(--title-size);
+    font-weight: bold;
+    color: var(--white);
+    -webkit-text-stroke: var(--stroke-size) var(--dark-green);
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    backdrop-filter: blur(2px);
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: grid;
+    #selection
+    {
+        text-align: center;
+        grid-column: 1 / 3;
+    }
+    #zero, #cross
+    {
+        background-color: var(--white);
+        width: 1em;
+        text-align: center;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 0.5em var(--white);
+        transition-timing-function: ease-in;
+        align-self: flex-start;
+        transform: scale(1.25);
+        transition-duration: 0.5s;
+        -webkit-text-stroke: var(--stroke-size) var(--eerie-black);
+        &:hover
+        {
+            box-shadow: 0 0 2em var(--white);
+        }
+    }
+    #zero
+    {
+        color: var(--dark-green);
+    }
+    #cross
+    {
+        color: var(--light-green);
+    }
+}
+
+@keyframes dissolveLayer {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.dissolve
+{
+    animation-name: dissolveLayer;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+#declareWinner
+{
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    font-family: Pricedown;
+    font-weight: bold;
+    font-size: var(--title-size);
+    -webkit-text-stroke: var(--stroke-size) var(--eerie-black);
+    grid-template-rows: 1fr 1fr;
+    place-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    display: none;
+    .pass
+    {
+        color: var(--orange);
+    }
+    .fail
+    {
+        color: var(--red);
+    }
+    #respectStatus
+    {
+        align-self: flex-start;
+        color: var(--white);
+    }
+}
+
+
+#Heading
+{
+    width: 100%;
+    background-color: var(--white);
+    text-align: center;
+    font-size: var(--title-size);
+    font-family: Pricedown;
+    font-weight: bold;
+    -webkit-text-stroke: var(--stroke-size) var(--eerie-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,170,1,255);
+}
+
+#playGround
+{
+    display: grid;
+    place-items: center;
+}
+
+#gameGrid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: #1b1b1b;
+    padding: 0;
+    gap: 0.2rem;
+    & > div
+    {
+        display: grid;
+        place-items: center;
+        font-family: Pricedown;
+        font-weight: bold;
+        color: var(--white);
+        -webkit-text-stroke: calc(calc(1rem + min(12vw, 12vh))/30) var(--eerie-black);
+        font-size: calc(4rem + min(12vw, 12vh));
+        width: calc(4rem + min(12vw, 12vh));
+        height: calc(4rem + min(12vw, 12vh));
+        background-color: white;
+    }
+    .zero
+    {
+        color: var(--dark-green);
+    }
+    .cross
+    {
+        color: var(--light-green);
+    }
+}

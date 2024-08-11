@@ -54,6 +54,7 @@ body
     #zero, #cross
     {
         background-color: var(--white);
+        cursor: pointer;
         width: 1em;
         text-align: center;
         border-radius: 0.5rem;
@@ -65,7 +66,7 @@ body
         -webkit-text-stroke: var(--stroke-size) var(--eerie-black);
         &:hover
         {
-            box-shadow: 0 0 2em var(--white);
+            box-shadow: 0 0 0.5em 0.25em var(--white);
         }
     }
     #zero
@@ -112,7 +113,7 @@ body
     font-weight: bold;
     font-size: var(--title-size);
     -webkit-text-stroke: var(--stroke-size) var(--eerie-black);
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     place-items: center;
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
@@ -120,6 +121,26 @@ body
     #passStatus
     {
         align-self: flex-end;
+    }
+    #respectStatus
+    {
+        align-self: flex-start;
+        color: var(--white);
+    }
+    #playAgain
+    {
+        padding: 0.5em;
+        transition-duration: 0.5s;
+        align-self: flex-start;
+        background-color: #1b1b1b;
+        color: var(--white);
+        border: 0.025em solid var(--white);
+        cursor: pointer;
+    }
+    #playAgain:hover
+    {
+        text-shadow: 0.075em 0.075em 0 var(--white);
+        box-shadow: 0.075em 0.075em 0 var(--eerie-black);
     }
     .pass
     {
@@ -132,11 +153,6 @@ body
     .draw
     {
         color: #354883;
-    }
-    #respectStatus
-    {
-        align-self: flex-start;
-        color: var(--white);
     }
 }
 

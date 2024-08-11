@@ -17,8 +17,8 @@ body
     font-size: 16px;
     --orange: #ffaa01;
     --white: #f1f2eb;
-    --light-green: #a4c2a5;
-    --dark-green: #566246;
+    --ballas-purple: #86446e;
+    --grove-street-green: #335f3f;
     --eerie-black: #1b1b1b;
     --red: #d40200;
     --title-size: calc(3rem + 4vw);
@@ -39,7 +39,7 @@ body
     font-size: var(--title-size);
     font-weight: bold;
     color: var(--white);
-    -webkit-text-stroke: var(--stroke-size) var(--dark-green);
+    -webkit-text-stroke: var(--stroke-size) var(--grove-street-green);
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     backdrop-filter: blur(5px);
@@ -71,11 +71,11 @@ body
     }
     #zero
     {
-        color: var(--dark-green);
+        color: var(--ballas-purple);
     }
     #cross
     {
-        color: var(--light-green);
+        color: var(--grove-street-green);
     }
 }
 
@@ -209,11 +209,11 @@ body
     }
     .zero
     {
-        color: var(--dark-green);
+        color: var(--ballas-purple);
     }
     .cross
     {
-        color: var(--light-green);
+        color: var(--grove-street-green);
     }
     .fadeIn
     {

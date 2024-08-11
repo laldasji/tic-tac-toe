@@ -221,7 +221,7 @@ failAudio.addEventListener('ended', () => {
         if (emptyCorners.length == 4) {
             // case 1.1: if one edge is filled
             if (filledEdges.length == 1)
-                return correspondingCorners[i];
+                return correspondingCorners[filledEdges[0]];
             // else return random corner
             return corners[Math.floor(Math.random() * 4)];
         }

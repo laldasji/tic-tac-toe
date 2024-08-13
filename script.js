@@ -260,14 +260,14 @@ failAudio.addEventListener('ended', () => {
     function declareWin(playerWins) {
         if (playerWins) {
             passStatus.textContent = 'mission passed!';
-            passStatus.classList.add('pass');
+            passStatus.className = 'pass';
             respectStatus.textContent = 'respect ++';
             declareWinner.style.display = 'grid';
             passAudio.play();
         }
         else {
             passStatus.textContent = 'mission failed!';
-            passStatus.classList.add('fail');
+            passStatus.className = 'fail';
             respectStatus.textContent = 'respect --';
             declareWinner.style.display = 'grid';
             failAudio.play();
@@ -276,7 +276,7 @@ failAudio.addEventListener('ended', () => {
 
     function declareDraw() {
         passStatus.textContent = 'draw!';
-        passStatus.classList.add('draw');
+        passStatus.className = 'draw';
         respectStatus.textContent = 'Good Game!';
         declareWinner.style.display = 'grid';
         passAudio.play();

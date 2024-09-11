@@ -195,15 +195,26 @@ failAudio.addEventListener('ended', () => {
             let aboutToWin = checkIfNextWinningMove(playerSymbol ? 'X' : 'O');
             if (aboutToWin[0])
                 return [aboutToWin[1], aboutToWin[2]];
-
+            
         }
+        const corners = [[0, 0], [0, 2], [2, 0], [2, 2]];
+        const edges = [[0,1],[1,0],[1,2],[2,1]];
         if (playerMoves.length == 1) {
-            if (Math.abs(playerMoves[0][0] - 1) == 1 && Math.abs(playerMoves[0][1] - 1) == 1) {
+            let playerMove = playerMoves[0];
+            if (!(Math.abs(playerMove[0] - 1) == 1 && Math.abs(playerMove[1] - 1) == 1) && playerMove != [1, 1]) { // edge piece filled
                 let possibilities = [
-                    [Math.abs(playerMoves[0][0] - 2), playerMoves[0][1]],
-                    [playerMoves[0][0], Math.abs(playerMoves[0][1] - 2)]
+                    [ playerMove[0] == 1 ? 0 : playerMove[0], playerMove[1] == 1 ? 0 : playerMove[1] ],
+                    [ playerMove[0] == 1 ? 2 : playerMove[0], playerMove[1] == 1 ? 2 : playerMove[1] ]
                 ];
                 return possibilities[Math.floor(Math.random() * 2)];
+            }
+        }
+        else if (playerMoves.length == 2) {
+            console.log('here');
+            console.log(playerMoves[0], playerMoves[1]);
+            if (!(playerMoves[0][1] == 1 || playerMoves[0][0] == 1) && !(playerMoves[1][1] == 1 || playerMoves[1][0] == 1)) {
+                console.log('too');
+                return edges[Math.floor(Math.random() * 4)];
             }
         }
         // first fill center
@@ -211,8 +222,6 @@ failAudio.addEventListener('ended', () => {
             return [1, 1];
 
         // else fill corners
-        const corners = [[0, 0], [0, 2], [2, 0], [2, 2]];
-        const edges = [[0,1],[1,0],[1,2],[2,1]];
         let filledEdges = [];
         const correspondingCorners = [[2,0],[2,2],[0,0],[0,2]];
         let emptyCorners = [];

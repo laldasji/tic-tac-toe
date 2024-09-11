@@ -197,6 +197,15 @@ failAudio.addEventListener('ended', () => {
                 return [aboutToWin[1], aboutToWin[2]];
 
         }
+        if (playerMoves.length == 1) {
+            if (Math.abs(playerMoves[0][0] - 1) == 1 && Math.abs(playerMoves[0][1] - 1) == 1) {
+                let possibilities = [
+                    [Math.abs(playerMoves[0][0] - 2), playerMoves[0][1]],
+                    [playerMoves[0][0], Math.abs(playerMoves[0][1] - 2)]
+                ];
+                return possibilities[Math.floor(Math.random() * 2)];
+            }
+        }
         // first fill center
         if (gameBoard[1][1] == '')
             return [1, 1];
